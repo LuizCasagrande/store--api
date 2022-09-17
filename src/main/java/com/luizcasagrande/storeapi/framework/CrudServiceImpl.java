@@ -51,7 +51,7 @@ public abstract class CrudServiceImpl<T> implements CrudService<T> {
         getRepository().deleteById(id);
     }
 
-    private NoResultException getNoResultException(UUID id) {
+    protected NoResultException getNoResultException(UUID id) {
         String message = format(NO_RESULT_MSG, persistentClass.getSimpleName(), id);
         return new NoResultException(message);
     }

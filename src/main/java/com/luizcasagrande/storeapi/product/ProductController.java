@@ -7,6 +7,7 @@ import com.luizcasagrande.storeapi.product.dto.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,7 @@ public class ProductController extends ReadRestController<Product, ProductRespon
         return productService;
     }
 
+    @PreAuthorize("hasAuthority('MANAGER')")
     @ResponseStatus(CREATED)
     @PostMapping
     public ProductResponse save(@Valid @RequestBody ProductRequest request) {
@@ -44,6 +46,7 @@ public class ProductController extends ReadRestController<Product, ProductRespon
         return toResponse(product);
     }
 
+    @PreAuthorize("hasAuthority('MANAGER')")
     @ResponseStatus(OK)
     @PutMapping("{id}")
     public ProductResponse update(@PathVariable("id") UUID id, @Valid @RequestBody ProductRequest request) {
@@ -53,6 +56,7 @@ public class ProductController extends ReadRestController<Product, ProductRespon
         return toResponse(product);
     }
 
+    @PreAuthorize("hasAuthority('MANAGER')")
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") UUID id) {
         productService.delete(id);

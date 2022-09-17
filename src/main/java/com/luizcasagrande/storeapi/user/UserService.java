@@ -12,13 +12,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.function.Predicate;
 
+import static com.luizcasagrande.storeapi.user.UserType.CUSTOMER;
 import static com.luizcasagrande.storeapi.util.StoreApiConstants.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
 public class UserService extends CrudServiceImpl<User> implements UserDetailsService {
 
+    public static final Predicate<User> isCustomer = user -> CUSTOMER.equals(user.getType());
     private final UserRepository userRepository;
     private final ApplicationEventPublisher eventPublisher;
     private final PasswordEncoder passwordEncoder;
